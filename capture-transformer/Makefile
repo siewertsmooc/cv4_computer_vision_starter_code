@@ -7,37 +7,33 @@ CFLAGS= -O0 -g $(INCLUDE_DIRS) $(CDEFS)
 LIBS= -L/usr/lib -lopencv_core -lopencv_flann -lopencv_video -lrt
 
 HFILES= 
-CFILES= capture.cpp capture_timed.cpp ipcapture.cpp diffcapture.cpp brighten.cpp gstream_cap.cpp videowriter.cpp gstream_simple.cpp
+CFILES= canny.cpp
 
 SRCS= ${HFILES} ${CFILES}
 OBJS= ${CFILES:.cpp=.o}
 
-all:	capture capture_timed ipcapture diffcapture brighten gstream_cap videowriter
+all:	canny houghline houghcirc sobel cannycam pyrUpDown
 
 clean:
 	-rm -f *.o *.d
-	-rm -f capture ipcapture diffcapture brighten gstream_cap capture_timed videowriter
+	-rm -f canny houghline houghcirc cannycam pyrUpDown sobel
 
-videowriter: videowriter.o
+houghcirc: houghcirc.o
 	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o `pkg-config --libs opencv4` $(LIBS)
 
-gstream_cap: gstream_cap.o
+houghline: houghline.o
 	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o `pkg-config --libs opencv4` $(LIBS)
 
-capture: capture.o
+canny: canny.o
 	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o `pkg-config --libs opencv4` $(LIBS)
 
-capture_timed: capture_timed.o
+sobel: sobel.o
 	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o `pkg-config --libs opencv4` $(LIBS)
 
-
-ipcapture: ipcapture.o
+pyrUpDown: pyrUpDown.o
 	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o `pkg-config --libs opencv4` $(LIBS)
 
-diffcapture: diffcapture.o
-	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o `pkg-config --libs opencv4` $(LIBS)
-
-brighten: brighten.o
+cannycam: cannycam.o
 	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o `pkg-config --libs opencv4` $(LIBS)
 
 depend:
